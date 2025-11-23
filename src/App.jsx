@@ -6,19 +6,45 @@ import axios from "axios";
 
 function App() {
   const [isUser, setIsUser] = useState(true);
+
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     axios
       .get("https://jsonplaceholder.typicode.com/users")
-      .then((res) => setUsers(res.data, console.log(res)))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        setUsers(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
     axios
       .get("https://jsonplaceholder.typicode.com/posts")
-      .then((res) => setPosts(res.data.slice(0, 10), console.log(res)))
+      .then((res) => setPosts(res.data.slice(0, 10)))
       .catch((err) => console.log(err));
   }, []);
+
+  if (loading) {
+    return (
+      <div className="container mx-auto my-5 pb-2 w-1/2 h-fit bg-gray-50 flex flex-col items-center">
+        <h1 className="text-xl font-bold">در حال دریافت اطلاعات ...</h1>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto my-5 pb-2 w-1/2 h-fit bg-gray-50 flex flex-col items-center">
+        <h1 className="text-xl text-red-500 font-bold">{error}</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto my-5 pb-2 w-1/2 h-fit bg-gray-50 flex flex-col items-center">
