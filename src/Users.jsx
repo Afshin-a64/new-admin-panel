@@ -27,7 +27,7 @@ const Users = () => {
       <h2 className="mt-10 mb-5">لیست کاربران</h2>
       <Link
         to={"/users/add-user"}
-        className="mb-4 p-1 rounded-sm bg-blue-600 text-white"
+        className="mb-2 p-1 rounded-sm bg-blue-600 text-white"
       >
         افزودن کاربر
       </Link>
