@@ -3,6 +3,7 @@ import Posts from "./Posts";
 import "./style.css";
 import Users from "./Users";
 import AddUser from "./AddUser.jsx";
+import UserDetail from "./UserDetail.jsx";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
       <Routes>
         <Route path="/users" element={<Users />}>
           <Route path="add-user" element={<AddUser />} />
+          <Route path="user-details/:userId" element={<UserDetail/>}/>
         </Route>
         <Route path="/posts" element={<Posts />} />
       </Routes>
