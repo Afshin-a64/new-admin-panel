@@ -1,10 +1,13 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useGetData } from "./getData.js";
 
 const Users = () => {
   const { data, loading, error } = useGetData(
     "https://jsonplaceholder.typicode.com/users"
   );
+
+  const navigate = useNavigate()
+
 
   if (loading) {
     return (
@@ -31,7 +34,7 @@ const Users = () => {
       >
         افزودن کاربر
       </Link>
-      <Outlet/>
+      <Outlet />
       <div
         className={`container w-10/12 mx-auto border shadow-md rounded-sm border-gray-300`}
       >
@@ -39,6 +42,7 @@ const Users = () => {
           {data.map((user) => (
             <li
               key={user.id}
+              onClick={()=>navigate(`user-details/${user.id}`)}
               className="flex justify-between items-center py-3 hover:bg-blue-50"
             >
               <p className="">
