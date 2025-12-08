@@ -42,7 +42,7 @@ const Users = () => {
           {data.map((user) => (
             <li
               key={user.id}
-              onClick={()=>navigate(`user-details/${user.id}`)}
+              onClick={()=>navigate(`user-details/${user.id}`, {state: user})}
               className="flex justify-between items-center py-3 hover:bg-blue-50"
             >
               <p className="">

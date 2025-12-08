@@ -1,27 +1,31 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 const UserDetail = () => {
-  const { userId } = useParams();
+  const { userId } = useParams()
 
-  const inpurRef = useRef()
-  const handlefocus = ()=>{
-    inpurRef.current.focus()
+  const location = useLocation()
+  const [selectedUser, setSelectedUser] = useState(location.state)
+  
+
+  const inputRef = useRef()
+  const handleFocus = ()=>{
+    inputRef.current.focus()
   }
   
-  const [user, setUser] = useState({})
+  // const [user, setUser] = useState({})
   useEffect(()=>{
-    axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`)
-    .then(res => setUser(res.data))
-    .catch(err => console.log(err)
-    )
-    handlefocus()
+    // axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`)
+    // .then(res => setUser(res.data))
+    // .catch(err => console.log(err)
+    // )
+    handleFocus()
   },[])
 
   const handleEditUser = (e)=>{
     e.preventDefault()
-    axios.put(`https://jsonplaceholder.typicode.com/users/${userId}`, user)
+    axios.put(`https://jsonplaceholder.typicode.com/users/${userId}`, selectedUser)
     .then(res => console.log(res)
     )
   }
@@ -29,7 +33,9 @@ const UserDetail = () => {
   return (
     <div className="w-full h-screen fixed left-0 top-0 flex justify-center items-center bg-gray-800/50">
       <div className="w-1/3 h-8/9 p-3 overflow-auto flex flex-col bg-blue-100 rounded-md">
-        <form onSubmit={handleEditUser}>
+        <form 
+        onSubmit={handleEditUser}
+        >
           <div>
             <h2>afshin ataei</h2>
           </div>
@@ -37,51 +43,54 @@ const UserDetail = () => {
             <h1 className="font-bold">اطلاعات شخصی</h1>
             <label>نام کاربری:</label>
             <input
-              value={user.username}
-              ref={inpurRef}
-              onChange={(e)=>setUser({... user, username: e.target.value})}
+              value={selectedUser.username}
+              ref={inputRef}
+              onChange={(e)=>setSelectedUser({... selectedUser, username: e.target.value})}
               type="text"
               className="bg-gray-50 rounded-sm p-1 mt-1"
             />
             <label>ایمیل:</label>
             <input
-              value={user.email}
-              onChange={(e)=>setUser({... user, email: e.target.value})}
+              value={selectedUser.email}
+              onChange={(e)=>setSelectedUser({... selectedUser, email: e.target.value})}
               type="email"
               className="bg-gray-50 rounded-sm p-1 mt-1"
             />
             <label>تلفن:</label>
             <input
-              value={user.phone}
-              onChange={(e)=>setUser({... user, phone: e.target.value})}
+              value={selectedUser.phone}
+              onChange={(e)=>setSelectedUser({... selectedUser, phone: e.target.value})}
               type="text"
               className="bg-gray-50 rounded-sm p-1 mt-1"
             />
             <label>وب سایت:</label>
             <input
-              value={user.website}
-              onChange={(e)=>setUser({... user, website: e.target.value})}
+              value={selectedUser.website}
+              onChange={(e)=>setSelectedUser({... selectedUser, website: e.target.value})}
               type="text"
               className="bg-gray-50 rounded-sm p-1 mt-1"
             />
           </div>
-          {/* <div className="flex flex-col border-b-2 border-gray-300 py-3 my-2">
+            <div className="flex flex-col border-b-2 border-gray-300 py-3 my-2">
             <h1 className="font-bold">آدرس</h1>
             <label>خیابان:</label>
             <input
-              value={data.address.street}
+              value={selectedUser.address.street}
+              onChange={(e)=>setSelectedUser({... selectedUser, address: {... selectedUser.address, street: e.target.value}})}
               type="text"
               className="bg-gray-50 rounded-sm p-1 mt-1"
             />
             <label>شهر:</label>
             <input
-              value={data.address.city}
+              value={selectedUser.address.city}
+              onChange={(e)=>setSelectedUser({... selectedUser, address: {...selectedUser.address, city: e.target.value}})}
               type="text"
               className="bg-gray-50 rounded-sm p-1 mt-1"
             />
             <label>کد پستی:</label>
             <input
-              value={data.address.zipcode}
+              value={selectedUser.address.zipcode}
+              onChange={(e)=>setSelectedUser({... selectedUser, address: {...selectedUser.address, zipcode: e.target.value}})}
               type="text"
               className="bg-gray-50 rounded-sm p-1 mt-1"
             />
@@ -90,17 +99,19 @@ const UserDetail = () => {
             <h1 className="font-bold">شرکت</h1>
             <label>نام:</label>
             <input
-              value={data.company.name}
+              value={selectedUser.company.name}
+              onChange={(e)=>setSelectedUser({... selectedUser, company: {...selectedUser.company, name: e.target.value}})}
               type="text"
               className="bg-gray-50 rounded-sm p-1 mt-1"
             />
             <label>شعار:</label>
             <input
-              value={data.company.bs}
+              value={selectedUser.company.bs}
+              onChange={(e)=>setSelectedUser({... selectedUser, company: {...selectedUser.company, bs: e.target.value}})}
               type="text"
               className="bg-gray-50 rounded-sm p-1 mt-1"
             />
-          </div> */}
+          </div>
           <div>
             <h2 className="my-2 font-bold">مهارت ها</h2>
             <ul className="flex justify-between text-sm">
