@@ -1,13 +1,17 @@
-import { Link, NavLink, Route, Routes, Outlet } from "react-router-dom";
+import { Link, NavLink, Route, Routes, Outlet, Navigate } from "react-router-dom";
 import Posts from "./Posts";
 import "./style.css";
 import Users from "./Users";
 import AddUser from "./AddUser.jsx";
 import UserDetail from "./UserDetail.jsx";
+import NotFound from "./NotFound.jsx";
 
 function App() {
+
+
   return (
     <div className="container mx-auto my-5 pb-2 w-1/2 h-fit bg-gray-50 flex flex-col items-center">
+
       <h1 className="my-5 font-bold text-xl">React App</h1>
       <div className="flex gap-4">
         <NavLink
@@ -41,6 +45,8 @@ function App() {
           <Route path="user-details/:userId" element={<UserDetail/>}/>
         </Route>
         <Route path="/posts" element={<Posts />} />
+        <Route path="/" element={<Navigate to={'/users'}/>}/>
+        <Route path="*" element={<NotFound />}/>
       </Routes>
     </div>
   );

@@ -5,8 +5,9 @@ import axios from "axios";
 const UserDetail = () => {
   const { userId } = useParams()
 
-  const location = useLocation()
-  const [selectedUser, setSelectedUser] = useState(location.state)
+  const {state: user} = useLocation()
+  
+  const [selectedUser, setSelectedUser] = useState(user)
   
 
   const inputRef = useRef()
